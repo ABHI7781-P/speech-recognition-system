@@ -40,3 +40,4 @@ IoT Prototypes: Useful in developing scalable IoT applications using voice as a 
 
 #OUTPUT
 
+<img width="1092" height="648" alt="Image" src="https://github.com/user-attachments/assets/4275f8f2-d3ba-4964-8c01-dcb194d7aba2" />
