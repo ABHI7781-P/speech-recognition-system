@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Voice-Controlled Device Interface</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e0f7fa;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #00796b;
+    }
+    .status {
+      margin-top: 20px;
+      font-size: 1.5em;
+      color: #004d40;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 1em;
+      margin-top: 20px;
+      cursor: pointer;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+    .device-status {
+      margin-top: 40px;
+      font-size: 1.3em;
+      color: #00695c;
+    }
+  </style>
+</head>
+<body>
+  <h1>Speech Recognition Device Controller</h1>
+  <button onclick="startListening()">🎙 Start Listening</button>
+  <div class="status" id="speechOutput">Say a command like “Turn on the fan”</div>
+  <div class="device-status" id="deviceStatus">Device status: Idle</div>
+
+  <script>
+    const output = document.getElementById('speechOutput');
+    const deviceStatus = document.getElementById('deviceStatus');
+
+    function startListening() {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert('Speech Recognition not supported in this browser.');
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.start();
+      output.textContent = 'Listening...';
+
+      recognition.onresult = function(event) {
+        const command = event.results[0][0].transcript.toLowerCase();
+        output.textContent = 'You said: "' + command + '"';
+
+        // Command handling simulation
+        if (command.includes('turn on the light')) {
+          deviceStatus.textContent = 'Device status: Light ON';
+        } else if (command.includes('turn off the light')) {
+          deviceStatus.textContent = 'Device status: Light OFF';
+        } else if (command.includes('turn on the fan')) {
+          deviceStatus.textContent = 'Device status: Fan ON';
+        } else if (command.includes('turn off the fan')) {
+          deviceStatus.textContent = 'Device status: Fan OFF';
+        } else {
+          deviceStatus.textContent = 'Device status: Unknown command';
+        }
+      };
+
+      recognition.onerror = function(event) {
+        output.textContent = 'Error: ' + event.error;
+      };
+    }
+  </script>
+</body>
+</html>
